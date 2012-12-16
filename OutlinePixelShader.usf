@@ -1,0 +1,34 @@
+/***************************************************************************************/
+/*! \file OutlinePixelShader.usf
+* 
+* Modual shadermod manager, enables multiple shader mods to play nicely together.
+* 
+* You do not make changes to this file - Use OutlinePixelShaderSettings.usf
+****************************************************************************************/
+
+#include "OutlinePixelShaderSettings.usf"
+
+	float2 ScreenSize = float2( 1.0 / SCREEN_SIZE_X, 1.0 / SCREEN_SIZE_Y );
+	
+	float flDepth  = CalcSceneDepth( SceneUV );
+	float flDepthTop    = flDepth - CalcSceneDepth( SceneUV + float2(0.0, -ScreenSize.y) );
+	float flDepthLeft   = flDepth - CalcSceneDepth( SceneUV + float2(-ScreenSize.x,  0.0 ) );
+	float flDepthRight  = flDepth - CalcSceneDepth( SceneUV + float2(ScreenSize.x,  0.0 ) );
+	float flDepthBottom = flDepth - CalcSceneDepth( SceneUV + float2(0.0, ScreenSize.y ) );
+	flDepthTop /= 100.0;flDepthLeft/= 100.0;flDepthRight /= 100.0;flDepthBottom /= 100.0;
+	
+	//float flDepthTopLeft    = abs(flDepth - CalcSceneDepth( SceneUV + float2(-ScreenSize.x, -ScreenSize.y) ) );
+	//float flDepthTopRight   = abs(flDepth - CalcSceneDepth( SceneUV + float2(ScreenSize.x, -ScreenSize.y) ) );
+	//float flDepthBottomLeft = abs(flDepth - CalcSceneDepth( SceneUV + float2(-ScreenSize.x,  ScreenSize.y ) ) );
+	//float flDepthBottomRight  = abs(flDepth - CalcSceneDepth( SceneUV + float2(ScreenSize.x,  ScreenSize.y ) ) );
+	//flDepthTopRight /= 100.0;flDepthTopLeft/= 100.0;flDepthBottomRight /= 100.0;flDepthBottomLeft /= 100.0;
+	flDepth /= 100.0;
+
+	
+	if(flDepthTop >= OUTLINE_GAP * flDepth || flDepthLeft >= OUTLINE_GAP * flDepth || flDepthRight >= OUTLINE_GAP * flDepth || flDepthBottom >= OUTLINE_GAP * flDepth )
+	{
+		OutColor.rgb = lerp(OutColor.rgb, float3(0.0, 0.0, 0.0), max(max(flDepthTop, flDepthLeft),max(flDepthRight, flDepthBottom)) / flDepth);
+		// OutColor.rgb = OUTLINE_COLOR;
+		// OutColor.rgb = OutColor.rgb;
+	}
+

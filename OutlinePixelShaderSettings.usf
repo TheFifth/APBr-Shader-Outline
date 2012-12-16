@@ -1,0 +1,18 @@
+/***************************************************************************************/
+/*! \file OutlinePixelShaderSettings.usf
+* 
+* Modual shadermod manager, enables multiple shader mods to play nicely together.
+* 
+* Use this to adjust Outline settings.
+****************************************************************************************/
+
+//INCLUDE THE .0 OR OTHER THINGS BREAK!!!
+
+// Monitor resolution
+#define SCREEN_SIZE_X 1920.0
+#define SCREEN_SIZE_Y 1080.0
+
+#define OUTLINE_GAP 0.1
+
+// Red, Green, Blue - ranges from 0.0 to 1.0
+#define OUTLINE_COLOR float3( 0.0, 0.0, 0.0 )
