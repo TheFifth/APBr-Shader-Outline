@@ -13,6 +13,7 @@
 #define SCREEN_SIZE_Y 1080.0
 
 #define OUTLINE_GAP 0.1
+#define OUTLINE_ENABLE_ANTIALIASING 0
 
 // Red, Green, Blue - ranges from 0.0 to 1.0
 #define OUTLINE_COLOR float3( 0.0, 0.0, 0.0 )
