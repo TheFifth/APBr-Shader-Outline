@@ -28,7 +28,7 @@
 	if(flDepthTop >= OUTLINE_GAP * flDepth || flDepthLeft >= OUTLINE_GAP * flDepth || flDepthRight >= OUTLINE_GAP * flDepth || flDepthBottom >= OUTLINE_GAP * flDepth )
 	{
 		#if OUTLINE_ENABLE_ANTIALIASING
-			OutColor.rgb = lerp(OutColor.rgb, float3(0.0, 0.0, 0.0), max(max(flDepthTop, flDepthLeft),max(flDepthRight, flDepthBottom)) / flDepth);
+			OutColor.rgb = lerp(OutColor.rgb, OUTLINE_COLOR, max(max(flDepthTop, flDepthLeft),max(flDepthRight, flDepthBottom)) / flDepth);
 		#else
 			OutColor.rgb = OUTLINE_COLOR;
 		#endif // OUTLINE_ENABLE_ANTIALIASING
