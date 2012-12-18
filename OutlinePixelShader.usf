@@ -17,21 +17,16 @@
 	float flDepthBottom = flDepth - CalcSceneDepth( SceneUV + float2(0.0, ScreenSize.y ) );
 	flDepthTop /= 100.0;flDepthLeft/= 100.0;flDepthRight /= 100.0;flDepthBottom /= 100.0;
 	
-	//float flDepthTopLeft    = abs(flDepth - CalcSceneDepth( SceneUV + float2(-ScreenSize.x, -ScreenSize.y) ) );
-	//float flDepthTopRight   = abs(flDepth - CalcSceneDepth( SceneUV + float2(ScreenSize.x, -ScreenSize.y) ) );
-	//float flDepthBottomLeft = abs(flDepth - CalcSceneDepth( SceneUV + float2(-ScreenSize.x,  ScreenSize.y ) ) );
-	//float flDepthBottomRight  = abs(flDepth - CalcSceneDepth( SceneUV + float2(ScreenSize.x,  ScreenSize.y ) ) );
-	//flDepthTopRight /= 100.0;flDepthTopLeft/= 100.0;flDepthBottomRight /= 100.0;flDepthBottomLeft /= 100.0;
 	flDepth /= 100.0;
 
-	
-	if(flDepthTop >= OUTLINE_GAP * flDepth || flDepthLeft >= OUTLINE_GAP * flDepth || flDepthRight >= OUTLINE_GAP * flDepth || flDepthBottom >= OUTLINE_GAP * flDepth )
-	{
-		#if OUTLINE_ENABLE_ANTIALIASING
-			OutColor.rgb = lerp(OutColor.rgb, OUTLINE_COLOR, max(max(flDepthTop, flDepthLeft),max(flDepthRight, flDepthBottom)) / flDepth);
-		#else
-			OutColor.rgb = OUTLINE_COLOR;
-		#endif // OUTLINE_ENABLE_ANTIALIASING
-		// OutColor.rgb = OutColor.rgb;
+	if (flDepth <= OUTLINE_MAXDISTANCE) {
+		if(flDepthTop >= OUTLINE_GAP * flDepth || flDepthLeft >= OUTLINE_GAP * flDepth || flDepthRight >= OUTLINE_GAP * flDepth || flDepthBottom >= OUTLINE_GAP * flDepth )
+		{
+			#if OUTLINE_ENABLE_ANTIALIASING
+				OutColor.rgb = lerp(OutColor.rgb, OUTLINE_COLOR, max(max(flDepthTop, flDepthLeft),max(flDepthRight, flDepthBottom)) / flDepth);
+			#else
+				OutColor.rgb = OUTLINE_COLOR;
+			#endif // OUTLINE_ENABLE_ANTIALIASING
+			// OutColor.rgb = OutColor.rgb;
+		}
 	}
-
